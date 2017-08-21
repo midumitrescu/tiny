@@ -1,0 +1,111 @@
+swagger: '2.0'
+info:
+  title: Tiny URL Test Kata
+  description: |
+      Small tool for shortening URLs
+  version: "0.1"
+
+paths:
+
+  /:
+    post:
+      summary: Creates a shortened version of an URL
+      description: |
+        Creation of a new tiny URL.
+      parameters:
+        - $ref: '#/parameters/url'
+      operationId: create-short-url
+      consumes:
+        - 'application/x-www-form-urlencoded'
+        - 'application/json'
+      responses:
+        201:
+          description: |
+            The
+          headers:
+            Location:
+              description: Tiny URL representation identifiend the shortening.
+              type: string
+
+  /{tiny-url}:
+    get:
+      summary: Tries to access a resource.
+      parameters:
+        - $ref: '#/parameters/tiny-url'
+      operationId: get-original-url
+      responses:
+        302:
+          description: |
+            Send a redirect to the original resource.
+          headers:
+            Location:
+              description: Tiny URL representation identifiend the shortening.
+              type: string
+        404:
+          description: The tiny URL does not exist
+
+  /{tiny-url}/stats:
+    get:
+      operationId: get-ussage
+      summary: Get statistics related to the ussage of .
+      parameters:
+        - $ref: '#/parameters/tiny-url'
+        - $ref: '#/parameters/authentication'
+      responses:
+        200:
+          description: |
+            Obtains general use statistics regarding the tiny URL.
+          schema:
+            $ref: '#/definitions/Stats'
+          headers:
+            Location:
+              description: Tiny URL representation identifiend the shortening.
+              type: string
+definitions:
+  Stats:
+    type: object
+    description: |
+      Information regarding the ussage of a given tiny-url
+    properties:
+      creations:
+        type: integer
+        description: |
+          How othen the POST operation was called for the given URL.
+      redirects:
+        type: integer
+        description: |
+          How often the URL was actually used i.e. how often the redirect to the inital page was requested
+
+parameters:
+
+  url:
+    name: url
+    in: formData
+    required: true
+    type: string
+    description: |
+      URL that shoudl be shortened.
+
+  tiny-url:
+      name: tiny-url
+      in: path
+      required: true
+      type: string
+      description: |
+        Represents the identifier of a given URL shortening.
+  authentication:
+      name: Authentication
+      in: header
+      required: true
+      type: string
+      description: |
+        Represents an user authentication for accessing a protected resource.
+
+responses:
+  200:
+    description: Statistics regarding the ussage of the specified URL shortening.
+
+
+  401:
+    description: |
+      The request is unauthorized due to missing or incorrect credentials
