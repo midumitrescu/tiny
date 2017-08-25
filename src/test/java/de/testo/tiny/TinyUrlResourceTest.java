@@ -11,7 +11,7 @@ public class TinyUrlResourceTest {
 
     @Test
     public void initialization() {
-        System.out.println("All ok");
+        System.out.println("All not ok");
     }
 
 }
