@@ -1,6 +1,6 @@
 package de.testo.tiny.service;
 
-import de.testo.tiny.model.TinyURL;
+import de.testo.tiny.model.url.TinyURL;
 import de.testo.tiny.repository.CreationAuditRepository;
 import de.testo.tiny.repository.ReadAuditRepository;
 import org.springframework.beans.factory.annotation.Autowired;

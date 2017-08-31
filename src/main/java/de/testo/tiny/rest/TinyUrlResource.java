@@ -1,10 +1,10 @@
 package de.testo.tiny.rest;
 
 
-import de.testo.tiny.model.InOrder;
-import de.testo.tiny.model.TinyURL;
-import de.testo.tiny.model.TinyURLRequest;
-import de.testo.tiny.model.ValidUrl;
+import de.testo.tiny.model.url.InOrder;
+import de.testo.tiny.model.url.TinyURL;
+import de.testo.tiny.model.url.TinyURLRequest;
+import de.testo.tiny.model.url.ValidUrl;
 import de.testo.tiny.service.TinyUrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

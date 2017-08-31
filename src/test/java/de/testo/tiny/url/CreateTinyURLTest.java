@@ -2,8 +2,8 @@ package de.testo.tiny.url;
 
 import de.testo.tiny.url.matchers.CreationResponseMatcher;
 import de.testo.tiny.DomainObjectTestMother;
-import de.testo.tiny.model.TinyURL;
-import de.testo.tiny.model.TinyURLRequest;
+import de.testo.tiny.model.url.TinyURL;
+import de.testo.tiny.model.url.TinyURLRequest;
 import de.testo.tiny.service.TinyUrlService;
 import org.junit.After;
 import org.junit.Test;

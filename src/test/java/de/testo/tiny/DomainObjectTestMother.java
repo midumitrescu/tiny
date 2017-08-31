@@ -1,8 +1,8 @@
 package de.testo.tiny;
 
 
-import de.testo.tiny.model.TinyURL;
-import de.testo.tiny.repository.URLRepository;
+import de.testo.tiny.model.url.TinyURL;
+import de.testo.tiny.repository.TinyURLRepository;
 import de.testo.tiny.service.Abbreviations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 public class DomainObjectTestMother {
 
     @Autowired(required = false)
-    private URLRepository urlRepository;
+    private TinyURLRepository urlRepository;
 
     @Autowired
     private Abbreviations abbreviations;

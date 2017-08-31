@@ -1,4 +1,4 @@
-package de.testo.tiny.model;
+package de.testo.tiny.model.url;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;

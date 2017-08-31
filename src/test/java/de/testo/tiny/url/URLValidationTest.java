@@ -1,6 +1,6 @@
 package de.testo.tiny.url;
 
-import de.testo.tiny.model.TinyURLRequest;
+import de.testo.tiny.model.url.TinyURLRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

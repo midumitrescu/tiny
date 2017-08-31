@@ -1,4 +1,4 @@
-package de.testo.tiny.model;
+package de.testo.tiny.model.url;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Value;
@@ -13,6 +13,6 @@ public class TinyURLRequest {
 
     @JsonProperty
     @NotEmpty(message = "URL cannot be empty", groups = Default.class)
-    @ValidUrl(groups = BusinessValidationsGroup.class)
+    @ValidUrl(groups = URLValidationsOrder.class)
     private String url;
 }

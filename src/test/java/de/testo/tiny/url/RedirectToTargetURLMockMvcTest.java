@@ -2,7 +2,7 @@ package de.testo.tiny.url;
 
 
 import de.testo.tiny.DomainObjectTestMother;
-import de.testo.tiny.model.TinyURL;
+import de.testo.tiny.model.url.TinyURL;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

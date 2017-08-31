@@ -1,8 +1,8 @@
 package de.testo.tiny.service;
 
 import de.testo.tiny.DomainObjectTestMother;
-import de.testo.tiny.model.TinyURL;
-import de.testo.tiny.repository.URLRepository;
+import de.testo.tiny.model.url.TinyURL;
+import de.testo.tiny.repository.TinyURLRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class TinyUrlServiceTest {
     private TinyUrlService objectUnderTest;
 
     @Autowired
-    private URLRepository urlRepository;
+    private TinyURLRepository urlRepository;
 
     @Test
     public void creationOfNewURLDownIncreasesRecord() {

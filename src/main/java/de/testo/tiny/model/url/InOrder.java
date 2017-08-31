@@ -1,8 +1,8 @@
-package de.testo.tiny.model;
+package de.testo.tiny.model.url;
 
 import javax.validation.GroupSequence;
 import javax.validation.groups.Default;
 
-@GroupSequence({Default.class, BusinessValidationsGroup.class})
+@GroupSequence({Default.class, URLValidationsOrder.class})
 public interface InOrder {
 }

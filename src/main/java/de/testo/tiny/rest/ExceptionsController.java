@@ -1,7 +1,7 @@
 package de.testo.tiny.rest;
 
 import de.testo.tiny.model.Problem;
-import de.testo.tiny.model.TinyURLNotFoundException;
+import de.testo.tiny.model.url.TinyURLNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
