@@ -9,7 +9,7 @@ import javax.validation.groups.Default;
 
 @Value
 @Validated
-public class TinyUrlRequest {
+public class TinyURLRequest {
 
     @JsonProperty
     @NotEmpty(message = "URL cannot be empty", groups = Default.class)

@@ -2,34 +2,59 @@ package de.testo.tiny.rest;
 
 
 import de.testo.tiny.model.InOrder;
-import de.testo.tiny.model.TinyUrlRequest;
+import de.testo.tiny.model.TinyURL;
+import de.testo.tiny.model.TinyURLRequest;
+import de.testo.tiny.model.ValidUrl;
+import de.testo.tiny.service.TinyUrlService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.net.URI;
+
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
 public class TinyUrlResource {
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createNewTinyUrl(@Validated(InOrder.class) @RequestBody TinyUrlRequest body) {
+    private final TinyUrlService urlService;
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
-                "/{tiny-url}").buildAndExpand("testing").toUri();
-        return ResponseEntity.created(location).build();
+    @Autowired
+    public TinyUrlResource(TinyUrlService urlService) {
+        this.urlService = urlService;
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> shortenURL(@Validated(InOrder.class) @RequestBody TinyURLRequest body) {
+        return handleShortenURLFor(body.getUrl());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<Void> createNewTinyUrl(@Validated @RequestBody MultiValueMap<String, String> body) {
+    public ResponseEntity<Void> shortenURL(@NotNull @ValidUrl @RequestParam("url") String url) {
+        return handleShortenURLFor(url);
+    }
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
-                "/{tiny-url}").buildAndExpand("testing").toUri();
+    @GetMapping("{tiny-url}")
+    public RedirectView redirectToTargetURL(@NotNull @PathVariable("tiny-url") String tinyUrlParam) throws IOException {
+
+        TinyURL tinyUrl = urlService.findTinyUrlOf(tinyUrlParam);
+        return new RedirectView(tinyUrl.getTargetURL());
+    }
+
+    private ResponseEntity<Void> handleShortenURLFor(String target) {
+        TinyURL register = urlService.register(target);
+        URI location = fromCurrentRequest().path(
+                "/{tiny-url}").buildAndExpand(register.getTinyURL()).toUri();
         return ResponseEntity.created(location).build();
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+    <Appenders>
+        <Console name="Stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5level | %d{yyyy-MM-dd HH:mm:ss,SSS} | [%t] | %message (%logger{1.})%n"/>
+        </Console>
+        <Async name="async">
+            <AppenderRef ref="Stdout"/>
+        </Async>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.springframework" level="debug" includeLocation="true" additivity="true"/>
+
+        <AsyncRoot level="info">
+            <AppenderRef ref="async"/>
+        </AsyncRoot>
+    </Loggers>
+
+</Configuration>

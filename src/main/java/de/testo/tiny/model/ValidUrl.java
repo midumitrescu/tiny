@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -40,8 +42,12 @@ public @interface ValidUrl {
 
         @Override
         public boolean isValid(String value, ConstraintValidatorContext context) {
-
-            return false;
+            try {
+                new URL(value);
+                return true;
+            } catch (MalformedURLException e) {
+                return false;
+            }
         }
     }
 }
