@@ -1,48 +1,48 @@
 package de.testo.tiny.service;
 
-import de.testo.tiny.model.metrics.Audit;
-import de.testo.tiny.model.metrics.TinyURLMetrics;
-import de.testo.tiny.model.metrics.Type;
+import de.testo.tiny.model.stats.Event;
+import de.testo.tiny.model.stats.TinyURLStats;
+import de.testo.tiny.model.stats.Type;
 import de.testo.tiny.model.url.TinyURL;
-import de.testo.tiny.repository.AuditRepository;
+import de.testo.tiny.repository.EventsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static java.util.UUID.randomUUID;
 
 @Service
-public class MetricsService {
+public class StatsService {
 
-    private final AuditRepository audit;
+    private final EventsRepository audit;
 
     @Autowired
-    public MetricsService(AuditRepository readRepository) {
+    public StatsService(EventsRepository readRepository) {
         this.audit = readRepository;
     }
 
     public void incrementCreateCounter(TinyURL tinyURL) {
-        Audit event = Audit.builder()
+        Event event = Event.builder()
                 .targetURL(tinyURL.getTargetURL())
                 .type(Type.CREATE)
-                .uuidTrace(randomUUID().toString())
+                .trace(randomUUID())
                 .build();
         audit.save(event);
     }
 
 
     public void incrementReadCounter(TinyURL tinyURL) {
-        Audit event = Audit.builder()
+        Event event = Event.builder()
                 .targetURL(tinyURL.getTargetURL())
                 .type(Type.READ)
-                .uuidTrace(randomUUID().toString())
+                .trace(randomUUID())
                 .build();
         audit.save(event);
     }
 
-    public TinyURLMetrics getMetricsFor(TinyURL tinyURL) {
-        return TinyURLMetrics.builder()
+    public TinyURLStats getStatsFor(TinyURL tinyURL) {
+        return TinyURLStats.builder()
                 .creates(audit.countDistinctByTargetURLAndType(tinyURL.getTargetURL(), Type.CREATE))
-                .reads(audit.countDistinctByTargetURLAndType(tinyURL.getTargetURL(), Type.READ))
+                .redirects(audit.countDistinctByTargetURLAndType(tinyURL.getTargetURL(), Type.READ))
                 .build();
     }
 }

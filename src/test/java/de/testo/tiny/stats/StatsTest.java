@@ -1,10 +1,10 @@
 package de.testo.tiny.stats;
 
 import de.testo.tiny.DomainObjectTestMother;
-import de.testo.tiny.model.metrics.TinyURLMetrics;
+import de.testo.tiny.model.stats.TinyURLStats;
 import de.testo.tiny.model.url.TinyURL;
 import de.testo.tiny.repository.TinyURLRepository;
-import de.testo.tiny.service.MetricsService;
+import de.testo.tiny.service.StatsService;
 import de.testo.tiny.service.TinyURLService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ public class StatsTest {
     private TinyURLService tinyURLService;
 
     @Autowired
-    private MetricsService metricsService;
+    private StatsService metricsService;
 
     @Autowired
     private TinyURLRepository urlRepository;
@@ -44,9 +44,9 @@ public class StatsTest {
                 index -> tinyURLService.register(tinyURL.getTargetURL())
         );
 
-        TinyURLMetrics metricsFor = metricsService.getMetricsFor(tinyURL);
-        assertThat(metricsFor.getCreates()).isEqualTo(randomTrials);
-        assertThat(metricsFor.getReads()).isEqualTo(0);
+        TinyURLStats statsFor = metricsService.getStatsFor(tinyURL);
+        assertThat(statsFor.getCreates()).isEqualTo(randomTrials);
+        assertThat(statsFor.getRedirects()).isEqualTo(0);
     }
 
     @Test

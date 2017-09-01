@@ -25,12 +25,12 @@ import java.net.URI;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-public class TinyUrlResource {
+public class TinyURLResource {
 
     private final TinyURLService urlService;
 
     @Autowired
-    public TinyUrlResource(TinyURLService urlService) {
+    public TinyURLResource(TinyURLService urlService) {
         this.urlService = urlService;
     }
 
@@ -47,7 +47,7 @@ public class TinyUrlResource {
     @GetMapping("{tiny-url}")
     public RedirectView redirectToTargetURL(@NotNull @PathVariable("tiny-url") String tinyUrlParam) throws IOException {
 
-        TinyURL tinyUrl = urlService.findTinyUrlOf(tinyUrlParam);
+        TinyURL tinyUrl = urlService.findTargetOf(tinyUrlParam);
         return new RedirectView(tinyUrl.getTargetURL());
     }
 

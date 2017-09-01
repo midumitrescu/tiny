@@ -1,8 +1,8 @@
 package de.testo.tiny.rest;
 
-import de.testo.tiny.model.metrics.TinyURLMetrics;
+import de.testo.tiny.model.stats.TinyURLStats;
 import de.testo.tiny.model.url.TinyURL;
-import de.testo.tiny.service.MetricsService;
+import de.testo.tiny.service.StatsService;
 import de.testo.tiny.service.TinyURLService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class StatsResource {
 
-    private final MetricsService metricsService;
+    private final StatsService metricsService;
     private final TinyURLService tinyURLService;
 
     @Autowired
-    public StatsResource(MetricsService metricsService, TinyURLService tinyURLService) {
+    public StatsResource(StatsService metricsService, TinyURLService tinyURLService) {
         this.metricsService = metricsService;
         this.tinyURLService = tinyURLService;
     }
 
-    @GetMapping(value = "/{tiny-url}/stats")
+    @GetMapping(value = "/{tiny-url}/stats", produces = "application/stats+json")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public TinyURLMetrics getStatsFor(@PathVariable("tiny-url") String tinyUrl) {
+    public TinyURLStats getStatsFor(@PathVariable("tiny-url") String tinyUrl) {
 
         TinyURL tinyURL = tinyURLService.findTinyUrlOf(tinyUrl);
-        return metricsService.getMetricsFor(tinyURL);
+        return metricsService.getStatsFor(tinyURL);
     }
 }

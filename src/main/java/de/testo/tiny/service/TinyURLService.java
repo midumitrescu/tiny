@@ -5,8 +5,6 @@ import de.testo.tiny.model.url.TinyURLNotFoundException;
 import de.testo.tiny.repository.TinyURLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -14,26 +12,31 @@ import java.util.Optional;
 public class TinyURLService {
 
     private final TinyURLRepository urlRepository;
-    private final MetricsService metricsService;
+    private final StatsService metricsService;
     private final Abbreviations abbreviations;
 
     @Autowired
-    public TinyURLService(TinyURLRepository urlRepository, MetricsService metricsService, Abbreviations abbreviations) {
+    public TinyURLService(TinyURLRepository urlRepository, StatsService metricsService, Abbreviations abbreviations) {
         this.urlRepository = urlRepository;
         this.metricsService = metricsService;
         this.abbreviations = abbreviations;
     }
 
     public TinyURL findTinyUrlOf(String tinyUrl) {
-        String desired = tinyUrl;
-        return urlRepository.findOneByTinyURL(tinyUrl).orElseThrow(() -> new TinyURLNotFoundException(desired));
+        return urlRepository.findOneByTinyURL(tinyUrl).orElseThrow(() -> new TinyURLNotFoundException(tinyUrl));
+    }
+
+    public TinyURL findTargetOf(String tinyUrl) {
+        TinyURL tinyURL = findTinyUrlOf(tinyUrl);
+        this.incrementReads(tinyURL);
+        return tinyURL;
     }
 
     public TinyURL register(String url) {
 
         Optional<TinyURL> tinyUrl = urlRepository.findOneByTargetURL(url);
         TinyURL result = tinyUrl.orElseGet(() -> newTiny(url));
-        markPlusOneCreate(result);
+        incrementWrites(result);
         return result;
     }
 
@@ -46,7 +49,11 @@ public class TinyURLService {
         return newTiny;
     }
 
-    private void markPlusOneCreate(TinyURL tinyURL) {
+    private void incrementWrites(TinyURL tinyURL) {
         metricsService.incrementCreateCounter(tinyURL);
+    }
+
+    private void incrementReads(TinyURL tinyURL) {
+        metricsService.incrementReadCounter(tinyURL);
     }
 }

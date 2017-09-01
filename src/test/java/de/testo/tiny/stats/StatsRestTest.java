@@ -11,13 +11,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
+import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -37,12 +36,10 @@ public class StatsRestTest {
         String url = domainObjectTestMother.randomURL();
 
         int randomTrials = new Random().nextInt(1000);
-
         Set<String> allReturnedLocations = IntStream.range(0, randomTrials)
                 .mapToObj(index -> restTemplate.postForEntity("/", new TinyURLRequest(url), String.class))
-                .map(stringResponseEntity -> stringResponseEntity.getHeaders().get(HttpHeaders.LOCATION))
-                .flatMap(List::stream)
-                .collect(Collectors.toSet());
+                .map(this::extractLocationHeader)
+                .collect(toSet());
 
         assertThat(allReturnedLocations, hasSize(1));
 
@@ -51,6 +48,28 @@ public class StatsRestTest {
         ResponseEntity<String> forEntity = restTemplate.getForEntity(location + "/stats", String.class);
 
         assertThat(forEntity.getBody(), hasJsonPath("$.creates", equalTo(randomTrials)));
+    }
+
+    @Test
+    public void readsOfURLsAudited() {
+        String url = domainObjectTestMother.randomURL();
+
+        ResponseEntity<String> createdTinyUrl = restTemplate.postForEntity("/", new TinyURLRequest(url), String.class);
+        String location = extractLocationHeader(createdTinyUrl);
+
+        int numberOfReads = new Random().nextInt(1000);
+        IntStream.range(0, numberOfReads)
+                .forEach(index -> restTemplate.getForEntity(location, String.class));
+
+
+        ResponseEntity<String> forEntity = restTemplate.getForEntity(location + "/stats", String.class);
+
+        assertThat(forEntity.getBody(), hasJsonPath("$.creates", equalTo(1)));
+        assertThat(forEntity.getBody(), hasJsonPath("$.redirects", equalTo(numberOfReads)));
+    }
+
+    private String extractLocationHeader(ResponseEntity<String> createResponse) {
+        return createResponse.getHeaders().get(HttpHeaders.LOCATION).get(0);
     }
 
 }

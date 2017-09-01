@@ -1,4 +1,4 @@
-package de.testo.tiny.model.metrics;
+package de.testo.tiny.model.stats;
 
 
 public enum Type {
