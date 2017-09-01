@@ -1,4 +1,4 @@
-package de.testo.tiny.service;
+package de.testo.tiny.repository;
 
 import java.io.StringWriter;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 
 import static java.lang.Character.getNumericValue;
 
-public class Abbreviations {
+public class AbbreviationsRepository {
 
     private final AtomicInteger counter;
 
@@ -16,8 +16,8 @@ public class Abbreviations {
 
     private static final int base26 = dictionary.length;
 
-    public Abbreviations(int counter) {
-        this.counter = new AtomicInteger(counter);
+    public AbbreviationsRepository(int startCounter) {
+        this.counter = new AtomicInteger(startCounter);
     }
 
     public String next() {

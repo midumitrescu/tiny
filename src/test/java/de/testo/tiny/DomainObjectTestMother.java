@@ -3,7 +3,7 @@ package de.testo.tiny;
 
 import de.testo.tiny.model.url.TinyURL;
 import de.testo.tiny.repository.TinyURLRepository;
-import de.testo.tiny.service.Abbreviations;
+import de.testo.tiny.repository.AbbreviationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class DomainObjectTestMother {
     private TinyURLRepository urlRepository;
 
     @Autowired
-    private Abbreviations abbreviations;
+    private AbbreviationsRepository abbreviations;
 
     public List<TinyURL> givenExistingAbbreviations(int count) {
             return IntStream.range(0, count)

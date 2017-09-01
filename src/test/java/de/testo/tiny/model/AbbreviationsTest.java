@@ -1,7 +1,7 @@
 package de.testo.tiny.model;
 
 
-import de.testo.tiny.service.Abbreviations;
+import de.testo.tiny.repository.AbbreviationsRepository;
 import org.junit.Test;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class AbbreviationsTest {
 
     @Test
     public void linearGeneration() {
-        Abbreviations abbreviations = new Abbreviations(0);
+        AbbreviationsRepository abbreviations = new AbbreviationsRepository(0);
         List<String> doubleCharAbbrev = IntStream.rangeClosed(0, 30).mapToObj(c -> abbreviations.next()).collect(toList());
         assertThat(doubleCharAbbrev)
                 .containsExactly("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",

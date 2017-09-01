@@ -1,7 +1,7 @@
 package de.testo.tiny.config;
 
 import de.testo.tiny.repository.TinyURLRepository;
-import de.testo.tiny.service.Abbreviations;
+import de.testo.tiny.repository.AbbreviationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ public class AbbreviationConfig {
     private TinyURLRepository repository;
 
     @Bean
-    public Abbreviations abbreviations() {
-        return new Abbreviations(repository.count());
+    public AbbreviationsRepository abbreviations() {
+        return new AbbreviationsRepository(repository.count());
     }
 }

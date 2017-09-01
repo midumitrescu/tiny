@@ -2,6 +2,7 @@ package de.testo.tiny.service;
 
 import de.testo.tiny.model.url.TinyURL;
 import de.testo.tiny.model.url.TinyURLNotFoundException;
+import de.testo.tiny.repository.AbbreviationsRepository;
 import de.testo.tiny.repository.TinyURLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,10 @@ public class TinyURLService {
 
     private final TinyURLRepository urlRepository;
     private final StatsService metricsService;
-    private final Abbreviations abbreviations;
+    private final AbbreviationsRepository abbreviations;
 
     @Autowired
-    public TinyURLService(TinyURLRepository urlRepository, StatsService metricsService, Abbreviations abbreviations) {
+    public TinyURLService(TinyURLRepository urlRepository, StatsService metricsService, AbbreviationsRepository abbreviations) {
         this.urlRepository = urlRepository;
         this.metricsService = metricsService;
         this.abbreviations = abbreviations;
