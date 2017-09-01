@@ -22,18 +22,18 @@ public class DomainObjectTestMother {
     private Abbreviations abbreviations;
 
     public List<TinyURL> givenExistingAbbreviations(int count) {
-            return IntStream.rangeClosed(1, count)
+            return IntStream.range(0, count)
                     .mapToObj(
-                        index -> urlRepository.save(randomTinyUrl()))
+                        index -> urlRepository.save(givenRandomTinyURL()))
                     .collect(Collectors.toList());
         }
 
-    public TinyURL randomTinyUrl() {
+    public TinyURL givenRandomTinyURL() {
         return TinyURL.builder().targetURL(randomURL()).tinyURL(abbreviations.next()).build();
     }
 
     public TinyURL randomPersistedTinyUrl() {
-        TinyURL random = randomTinyUrl();
+        TinyURL random = givenRandomTinyURL();
         urlRepository.save(random);
         return random;
     }

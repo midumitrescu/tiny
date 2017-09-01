@@ -12,6 +12,7 @@
 
     <Loggers>
         <Logger name="org.springframework" level="debug" includeLocation="true" additivity="true"/>
+        <Logger name="de.testo.tiny" level="debug" includeLocation="true" additivity="true"/>
 
         <AsyncRoot level="info">
             <AppenderRef ref="async"/>

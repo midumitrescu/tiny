@@ -5,7 +5,7 @@ import de.testo.tiny.model.url.InOrder;
 import de.testo.tiny.model.url.TinyURL;
 import de.testo.tiny.model.url.TinyURLRequest;
 import de.testo.tiny.model.url.ValidUrl;
-import de.testo.tiny.service.TinyUrlService;
+import de.testo.tiny.service.TinyURLService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +27,10 @@ import static org.springframework.web.servlet.support.ServletUriComponentsBuilde
 @RestController
 public class TinyUrlResource {
 
-    private final TinyUrlService urlService;
+    private final TinyURLService urlService;
 
     @Autowired
-    public TinyUrlResource(TinyUrlService urlService) {
+    public TinyUrlResource(TinyURLService urlService) {
         this.urlService = urlService;
     }
 

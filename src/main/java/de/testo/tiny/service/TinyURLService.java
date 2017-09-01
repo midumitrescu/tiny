@@ -5,18 +5,20 @@ import de.testo.tiny.model.url.TinyURLNotFoundException;
 import de.testo.tiny.repository.TinyURLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
-public class TinyUrlService {
+public class TinyURLService {
 
     private final TinyURLRepository urlRepository;
     private final MetricsService metricsService;
     private final Abbreviations abbreviations;
 
     @Autowired
-    public TinyUrlService(TinyURLRepository urlRepository, MetricsService metricsService, Abbreviations abbreviations) {
+    public TinyURLService(TinyURLRepository urlRepository, MetricsService metricsService, Abbreviations abbreviations) {
         this.urlRepository = urlRepository;
         this.metricsService = metricsService;
         this.abbreviations = abbreviations;
@@ -29,7 +31,7 @@ public class TinyUrlService {
 
     public TinyURL register(String url) {
 
-        Optional<TinyURL> tinyUrl = urlRepository.findOne(url);
+        Optional<TinyURL> tinyUrl = urlRepository.findOneByTargetURL(url);
         TinyURL result = tinyUrl.orElseGet(() -> newTiny(url));
         markPlusOneCreate(result);
         return result;

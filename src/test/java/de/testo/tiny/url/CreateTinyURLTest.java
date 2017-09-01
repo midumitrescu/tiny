@@ -4,7 +4,7 @@ import de.testo.tiny.url.matchers.CreationResponseMatcher;
 import de.testo.tiny.DomainObjectTestMother;
 import de.testo.tiny.model.url.TinyURL;
 import de.testo.tiny.model.url.TinyURLRequest;
-import de.testo.tiny.service.TinyUrlService;
+import de.testo.tiny.service.TinyURLService;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +34,7 @@ public class CreateTinyURLTest {
     private TestRestTemplate restTemplate;
 
     @MockBean
-    private TinyUrlService urlService;
+    private TinyURLService urlService;
 
     @After
     public void resetMocks() {
@@ -68,7 +68,7 @@ public class CreateTinyURLTest {
     }
 
     private TinyURL givenServiceReturnsTinyUrl() {
-        TinyURL newUrl = domainObjectTestMother.randomTinyUrl();
+        TinyURL newUrl = domainObjectTestMother.givenRandomTinyURL();
         Mockito.when(urlService.register(newUrl.getTargetURL())).thenReturn(newUrl);
         return newUrl;
     }

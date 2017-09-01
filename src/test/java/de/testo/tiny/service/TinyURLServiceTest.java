@@ -16,15 +16,15 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@SpringBootTest(webEnvironment = WebEnvironment.NONE)
 @Transactional
-public class TinyUrlServiceTest {
+public class TinyURLServiceTest {
 
     @Autowired
     private DomainObjectTestMother domainObjectTestMother;
 
     @Autowired
-    private TinyUrlService objectUnderTest;
+    private TinyURLService objectUnderTest;
 
     @Autowired
     private TinyURLRepository urlRepository;

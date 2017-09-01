@@ -32,7 +32,7 @@ public class RedirectToTargetURLTest {
     public void callingNotExistingTinyURL() throws Exception {
 
         TinyURL existing = domainObjectTestMother.randomPersistedTinyUrl();
-        TinyURL notExisting = domainObjectTestMother.randomTinyUrl();
+        TinyURL notExisting = domainObjectTestMother.givenRandomTinyURL();
 
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("/{tiny-url}", String.class, notExisting.getTinyURL());
 
