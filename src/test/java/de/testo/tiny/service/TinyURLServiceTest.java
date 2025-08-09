@@ -3,19 +3,16 @@ package de.testo.tiny.service;
 import de.testo.tiny.DomainObjectTestMother;
 import de.testo.tiny.model.url.TinyURL;
 import de.testo.tiny.repository.TinyURLRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 @Transactional
 public class TinyURLServiceTest {
