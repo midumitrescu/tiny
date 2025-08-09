@@ -6,11 +6,9 @@ import de.testo.tiny.model.url.TinyURL;
 import de.testo.tiny.repository.TinyURLRepository;
 import de.testo.tiny.service.StatsService;
 import de.testo.tiny.service.TinyURLService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Random;
@@ -18,7 +16,6 @@ import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class StatsTest {
 

@@ -2,7 +2,7 @@ package de.testo.tiny.model;
 
 
 import de.testo.tiny.repository.AbbreviationsRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.IntStream;
