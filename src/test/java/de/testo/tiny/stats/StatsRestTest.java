@@ -2,11 +2,14 @@ package de.testo.tiny.stats;
 
 import de.testo.tiny.DomainObjectTestMother;
 import de.testo.tiny.model.url.TinyURLRequest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.http.client.ClientHttpRequestFactorySettings;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -28,6 +31,8 @@ public class StatsRestTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+    @Autowired
+    private TestRestTemplate testRestTemplate;
 
     @Test
     public void creationOfURLsAudited() {
@@ -70,4 +75,14 @@ public class StatsRestTest {
         return createResponse.getHeaders().get(HttpHeaders.LOCATION).get(0);
     }
 
+    @TestConfiguration
+    static class NoRedirectTestRestTemplateConfig {
+
+        @Bean
+        public RestTemplateBuilder noRedirectRestTemplateBuilder() {
+            return new RestTemplateBuilder().redirects(
+                    ClientHttpRequestFactorySettings.Redirects.DONT_FOLLOW
+            );
+        }
+    }
 }
