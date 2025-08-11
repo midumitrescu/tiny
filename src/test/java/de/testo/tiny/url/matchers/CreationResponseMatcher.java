@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.emptyOrNullString;
 
 @AllArgsConstructor(staticName = "on")
 public class CreationResponseMatcher {
@@ -19,7 +19,7 @@ public class CreationResponseMatcher {
     }
 
     public CreationResponseMatcher assertNoBody() {
-        MatcherAssert.assertThat(assertOn.getBody(), isEmptyOrNullString());
+        MatcherAssert.assertThat(assertOn.getBody(), emptyOrNullString());
         return this;
     }
 
