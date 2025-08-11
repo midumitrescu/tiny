@@ -21,10 +21,12 @@ paths:
       responses:
         201:
           description: |
-            The
+            The URl has been successfully created. 
+            For usability, a second creation request for the same URL will not result in an error.
+            Therefore, if the URL has been shortened, its short variant will be returned.
           headers:
             Location:
-              description: Tiny URL representation identifiend the shortening.
+              description: Tiny URL representation identified the shortening.
               type: string
 
   /{tiny-url}:
@@ -39,15 +41,15 @@ paths:
             Send a redirect to the original resource.
           headers:
             Location:
-              description: Tiny URL representation identifiend the shortening.
+              description: The original location represented by the shortening.
               type: string
         404:
           description: The tiny URL does not exist
 
   /{tiny-url}/stats:
     get:
-      operationId: get-ussage
-      summary: Get statistics related to the ussage of .
+      operationId: get-usage
+      summary: Get statistics related to the usage of .
       parameters:
         - $ref: '#/parameters/tiny-url'
         - $ref: '#/parameters/authentication'
@@ -59,7 +61,7 @@ paths:
             $ref: '#/definitions/Stats'
           headers:
             Location:
-              description: Tiny URL representation identifiend the shortening.
+              description: Tiny URL representation the shortening.
               type: string
 definitions:
   Stats:
@@ -70,7 +72,7 @@ definitions:
       creations:
         type: integer
         description: |
-          How othen the POST operation was called for the given URL.
+          How often the POST operation was called for the given URL.
       redirects:
         type: integer
         description: |
@@ -84,7 +86,7 @@ parameters:
     required: true
     type: string
     description: |
-      URL that shoudl be shortened.
+      URL to be shortened.
 
   tiny-url:
       name: tiny-url
@@ -103,8 +105,7 @@ parameters:
 
 responses:
   200:
-    description: Statistics regarding the ussage of the specified URL shortening.
-
+    description: Statistics regarding the usage of the specified URL shortening.
 
   401:
     description: |
